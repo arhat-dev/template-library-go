@@ -14,7 +14,7 @@
 
 .PHONY: tidy
 tidy:
-	go mod tidy
+	GOPROXY=direct GOSUMDB=off go mod tidy
 
 include scripts/test.mk
 include scripts/lint.mk

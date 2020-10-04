@@ -20,10 +20,9 @@ stylecheck:
   script:
   - make lint.all
 
-
 .test:
   stage: unit-tests
-  image: arhatdev/base-go:debian
+  image: arhatdev/builder-go:debian
   script:
   - make test.unit
   dependencies:
@@ -43,3 +42,11 @@ test:unit:darwin:
   extends: .test
   tags:
   - darwin
+
+test:fuzz:
+  extends: .test
+  script:
+  - make install.fuzz
+  - make test.fuzz
+  dependencies:
+  - stylecheck

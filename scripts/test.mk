@@ -18,4 +18,8 @@ GO_TEST := GOOS=$(shell go env GOHOSTOS) GOARCH=$(shell go env GOHOSTARCH) CGO_E
 test.unit:
 	${GO_TEST} -coverprofile=coverage.txt -coverpkg=./... ./...
 
+install.fuzz:
+	sh scripts/fuzz.sh install
+
 test.fuzz:
+	sh scripts/fuzz.sh run	

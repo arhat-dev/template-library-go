@@ -21,13 +21,21 @@ env:
 jobs:
   check:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go:
+        - 1.14.x
+        # there are some issues for fuzz test with go1.15
+        # - 1.15.x
+
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install go1.14
+    - name: Install Go ${{ matrix.go }}
       uses: actions/setup-go@v2
       with:
-        go-version: 1.14.x
+        go-version: ${{ matrix.go }}
 
     - name: Ensure tidy gomod
       run: |
@@ -43,12 +51,17 @@ jobs:
       run: |
         make lint.all
 
-    - name: Test
+    - name: Unit Tests
       run: |
-        make test.all
+        make test.unit
 
     - name: Report Test Coverage
       uses: codecov/codecov-action@v1
       # with:
       #   token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
       #   fail_ci_if_error: true # optional (default = false)
+    
+    - name: Fuzz Tests
+      run: |
+        make install.fuzz
+        make test.fuzz
