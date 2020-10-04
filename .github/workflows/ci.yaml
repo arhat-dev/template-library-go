@@ -20,7 +20,7 @@ env:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
@@ -28,6 +28,10 @@ jobs:
         - 1.14.x
         # there are some issues for fuzz test with go1.15
         # - 1.15.x
+        os:
+        # - macos-latest
+        # - windows-latest
+        - ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
