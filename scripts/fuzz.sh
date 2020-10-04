@@ -66,10 +66,13 @@ run() {
 
   ${fuzz_build} -o build/fuzz.zip
 
-  # run fuzz for 10m
-  ${fuzz} -bin build/fuzz.zip -workdir build/fuzz-result -timeout 600
+  ${fuzz} -bin build/fuzz.zip -workdir build/fuzz-result &
+  pid=$!
 
-  return
+  trap 'kill ${pid} >/dev/null 2>&1 || true' EXIT
+
+  echo "running fuzz test for 10m, pid: ${pid}"
+  sleep 600
 }
 
 # shellcheck disable=SC2068
