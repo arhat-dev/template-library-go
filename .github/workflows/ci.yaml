@@ -60,7 +60,7 @@ jobs:
       # with:
       #   token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
       #   fail_ci_if_error: true # optional (default = false)
-    
+
     - name: Fuzz Tests
       run: |
         make install.fuzz

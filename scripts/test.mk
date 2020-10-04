@@ -22,4 +22,4 @@ install.fuzz:
 	sh scripts/fuzz.sh install
 
 test.fuzz:
-	sh scripts/fuzz.sh run	
+	sh scripts/fuzz.sh run
